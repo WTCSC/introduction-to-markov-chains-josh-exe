@@ -19,35 +19,35 @@ for i in range(len(words) - 1): #----------------------------\
     transitions[current_word].append(next_word) #------------/
 
 
-def generate_text(start_word, num_words):
-    punctuation_search = ('.', '!', '?', ',') 
-    punctuation = ('.', '!', '?') 
+def generate_text(start_word, num_words):   #
+    punctuation_search = ('.', '!', '?', ',')   #------------------------------------------->  Defines which punctuation to search for
+    punctuation = ('.', '!', '?')   #------------------------------------------------------->  Defines what punctuation should be used
 
-    current_word = start_word.lower()
-    result = [current_word.capitalize()]
+    current_word = start_word.lower()   #---------------------------/----------------------->  Makes every word lowercase except for the first word
+    result = [current_word.capitalize()]    #----------------------/
     
-    for _ in range(num_words - 1):
-        if current_word in transitions:
-            next_word = random.choice(transitions[current_word])
-            result.append(next_word)
-            current_word = next_word
+    for _ in range(num_words - 1):  #--------------------------------------\
+        if current_word in transitions: #                                   \
+            next_word = random.choice(transitions[current_word])  #          |-------------->  Generates the words as separate strings. The word generated depends on if it appears in the text after the word prior to it
+            result.append(next_word)    #                                   /
+            current_word = next_word    #----------------------------------/
             
         else:
             break
 
-    generated_text = " ".join(result)
+    generated_text = " ".join(result)   #--------------------------------------------------->  Joins the generated words together with spaces
 
-    generated_text = generated_text[0].upper() + generated_text[1:]
+    generated_text = generated_text[0].upper() + generated_text[1:] #----------------------->  The first letter of the first word is capitalized.
     
-    if not generated_text.endswith(punctuation_search):
-        generated_text += random.choice(punctuation)
+    if not generated_text.endswith(punctuation_search): #-----------------/----------------->  Punctuation is added if the generated text does not have any
+        generated_text += random.choice(punctuation)    #----------------/
 
-    return (generated_text.replace(" i ", " I ")).replace(' "', " ")
+    return (generated_text.replace(" i ", " I ")).replace('"', "")  #----------------------->  Returns the complete generated text
 
 
 
-start_word = input("Enter a starting word: ").lower()
-num_words = int(input("Enter the number of words to generate: "))
-file.close()
+start_word = input("Enter a starting word: ").lower()   #----------------------------------->  Takes a word to begin the generation, and makes it lowercase
+num_words = int(input("Enter the number of words to generate: "))   #----------------------->  Takes a number, which decides how many words are generated
+file.close()    #--------------------------------------------------------------------------->  Closes the shakespeare.txt file
 
 print(generate_text(start_word, num_words))
